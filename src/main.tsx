@@ -4,6 +4,7 @@ import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Feedback from "./pages/Feedback";
+import "./index.css";
 
 const root = document.getElementById("root") as HTMLElement;
 
