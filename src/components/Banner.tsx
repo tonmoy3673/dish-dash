@@ -19,9 +19,9 @@ const Banner = () => {
         </h2>
         <p className="text-center pt-3 text-white font-semibold text-xl leading-3 italic">
           {" "}
-          Fast<span className="text-amber-500 font-extrabold">.</span> Fresh
-          <span className="text-amber-500 font-extrabold">.</span> Delicious
-          <span className="text-amber-500 font-extrabold">.</span>
+          Fast<span className="text-amber-400 font-extrabold">.</span> Fresh
+          <span className="text-amber-400 font-extrabold">.</span> Delicious
+          <span className="text-amber-400 font-extrabold">.</span>
         </p>
       </div>
     </div>
