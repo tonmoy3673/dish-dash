@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import type { MealCategory } from "../types/meal-category.types";
+import type { MealCategoryType } from "../types/meal-category.types";
 import { getMealCategory } from "../services/meal-category-service";
 import Loader from "../hooks/useLoader";
 import Categories from "./Categories";
 
 const MealCategory = () => {
-  const [mealCategory, setMealCategory] = useState<MealCategory[]>([]);
+  const [mealCategory, setMealCategory] = useState<MealCategoryType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 

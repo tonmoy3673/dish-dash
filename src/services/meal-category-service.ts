@@ -1,10 +1,11 @@
 import type {
-  MealCategory,
+  
   MealCategoryResponse,
+  MealCategoryType,
 } from "../types/meal-category.types";
 
 // ============= getMealCategory =============//
-export const getMealCategory = async (): Promise<MealCategory[]> => {
+export const getMealCategory = async (): Promise<MealCategoryType[]> => {
   try {
     const response = await fetch(
       "https://www.themealdb.com/api/json/v1/1/categories.php"

@@ -1,5 +1,5 @@
 // ============ mealCategory ==========//
-export interface MealCategory {
+export interface MealCategoryType {
   idCategory: string;
   strCategory: string;
   strCategoryThumb: string;
@@ -8,7 +8,7 @@ export interface MealCategory {
 
 // ============ MealCategoryResponse ==========//
 export interface MealCategoryResponse{
-    categories: MealCategory[];
+    categories: MealCategoryType[];
 }
 
 
