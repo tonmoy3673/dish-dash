@@ -1,15 +1,16 @@
-import { ShoppingCart } from "lucide";
-import { NavLink } from "react-router";
+
+import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
   return (
     <div className="flex items-center justify-between">
       {/* ========= Logo ======= */}
       <div>
+        <Link to='/'>
         <img
           src="../../public/images/logo.png"
           className="rounded-full w-22 bg-amber-50 cursor-pointer hover:bg-amber-200"
-        />
+        /></Link>
       </div>
       {/* ============= nav ===== */}
       <nav className="mx-auto flex gap-x-5">
