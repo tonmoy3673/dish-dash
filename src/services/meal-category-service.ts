@@ -25,3 +25,6 @@ export const getMealCategory = async (): Promise<MealCategoryType[]> => {
     }
   }
 };
+
+
+// ============= getMealType ========//
