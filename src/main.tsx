@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Feedback from "./pages/Feedback";
 import "./index.css";
+import MealType from "./components/MealType";
 
 const root = document.getElementById("root") as HTMLElement;
 
@@ -15,6 +16,7 @@ ReactDOM.createRoot(root).render(
         <Route index element={<Home />}></Route>
         <Route path="about" element={<About />}></Route>
         <Route path="feedback" element={<Feedback />}></Route>
+        <Route path="mealCategories/:strCategory" element={<MealType/>}></Route>
       </Route>
     </Routes>
   </BrowserRouter>

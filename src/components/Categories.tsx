@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 import type { MealCategoryType } from "../types/meal-category.types";
 
 interface CategoryProps {
@@ -29,9 +31,11 @@ const Categories = ({ category }: CategoryProps) => {
       </p>
       {/* ============ Button ========== */}
       <div className="pt-2 mt-1 text-center">
-        <button className="raleway hover:scale-105 text-sm bg-blue-500 text-white transition-transform duration-300 shadow hover:shadow-2xl hover:bg-amber-500 px-4 py-1 mt-1 rounded-md cursor-pointer">
-          Explore
-        </button>
+        <Link to={`mealCategories/${strCategory}`}>
+          <button className="raleway hover:scale-105 text-sm bg-blue-500 text-white transition-transform duration-300 shadow hover:shadow-2xl hover:bg-amber-500 px-4 py-1 mt-1 rounded-md cursor-pointer">
+            Explore
+          </button>
+        </Link>
       </div>
     </div>
   );
