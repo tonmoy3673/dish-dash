@@ -1,7 +1,7 @@
 import type {
-  
   MealCategoryResponse,
   MealCategoryType,
+  MealType,
 } from "../types/meal-category.types";
 
 // ============= getMealCategory =============//
@@ -26,5 +26,24 @@ export const getMealCategory = async (): Promise<MealCategoryType[]> => {
   }
 };
 
-
 // ============= getMealType ========//
+export const getMealType = async (category: string): Promise<MealType> => {
+  try {
+    const response = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to Fetch Meal Data!");
+    }
+    const data: MealType = await response.json();
+    return data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(`Failed to Fetch Meal Data ${err.message}`);
+      throw new Error(`Failed to Fetch Data ${err.name}`);
+    } else {
+      console.error(`Unknown Error Found ${err}`);
+      throw new Error(`Unknown Error Found`);
+    }
+  }
+};
