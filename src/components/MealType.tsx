@@ -2,14 +2,17 @@ import { useEffect, useState } from "react";
 import type { MealType } from "../types/meal-category.types";
 import { useParams } from "react-router";
 import { getMealType } from "../services/meal-category-service";
-import { UtensilsCrossed } from "lucide-react";
+import { LoaderCircle, RotateCcw, UtensilsCrossed } from "lucide-react";
 import SelectedMeal from "./SelectedMeal";
 import Loader from "../hooks/useLoader";
 
 const MealType = () => {
-  const [meals, setMeals] = useState<MealType[]>( []);
+  const [meals, setMeals] = useState<MealType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [displayCount, setDisplayCount] = useState<number>(6);
+  
 
   const { strCategory } = useParams();
   // ================ loadMeal =======//
@@ -18,7 +21,7 @@ const MealType = () => {
     setLoading(true);
     const fetchMeal = async (strCategory: string): Promise<void> => {
       try {
-        const response  = await getMealType(strCategory);
+        const response = await getMealType(strCategory);
         setMeals(response);
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -34,7 +37,28 @@ const MealType = () => {
     };
     fetchMeal(strCategory);
   }, [strCategory]);
-  console.log('meals',meals);
+  console.log("meals", meals);
+
+  // ============ filterSearch ========//
+  const filterSearchMeal =
+    meals?.filter((meal) =>
+      meal?.strMeal?.toLowerCase().includes(searchTerm.toLowerCase().trim())
+    ) || [];
+
+  // ============ displaySearchedMeal ======//
+  const displaySearchedMeal =
+    searchTerm === "" ? filterSearchMeal.slice(0, displayCount) : filterSearchMeal;
+
+  // ========= handleDisplayCount =========//
+
+  const loadDisplayCount = () => {
+    setDisplayCount((pre) => pre + 3);
+  };
+
+  // =========== handleReset =======//
+  const handleReset = () => {
+    setDisplayCount(6);
+  };
 
   return (
     <div>
@@ -46,21 +70,58 @@ const MealType = () => {
         </span>{" "}
       </h2>
 
-     
+      {/* ============= search Field =======  */}
+      <div className="flex justify-center mb-5 mt-1 md:mt-4">
+        <input
+          type="text"
+          placeholder="Search Category ..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border px-4 py-2 rounded-md w-72 focus:border-1 focus:border-green-400 focus:outline-none focus:ring focus:ring-green-400"
+        />
+      </div>
 
       {/* ================= selectedMeals =========== */}
-      <div className="py-3 md:py-8">
+      <div className="py-3 md:py-3">
         {loading ? (
           <Loader />
         ) : error ? (
           <p className="text-red-500 font-semibold text-xl text-center py-3">
             {error}
           </p>
-        ) : meals && meals?.length > 0 ? (
-          <div className="flex flex-wrap gap-5 md:gap-12 justify-center">
-            {meals.map((meal)=> <SelectedMeal key={meal.idMeal} meal={meal}/>)}
-            
-          </div>
+        ) : displaySearchedMeal && displaySearchedMeal?.length > 0 ? (
+          <>
+            <div className="flex flex-wrap gap-5 md:gap-8 justify-center">
+              {displaySearchedMeal.slice(0, displayCount).map((meal) => (
+                <SelectedMeal key={meal.idMeal} meal={meal} />
+              ))}
+            </div>
+
+            {/* ============== load & reset button ======== */}
+            {searchTerm.trim() === "" && (
+              <div className="flex justify-center gap-4 pt-2 md:pt-8">
+                {displayCount <= displaySearchedMeal.length ? (
+                  <div className="flex justify-center pt-5 md:pt-8">
+                    <button
+                      onClick={loadDisplayCount}
+                      className="px-6 flex justify-center items-center gap-x-2 py-2 cursor-pointer bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-amber-600 transition hover:scale-105 duration-300"
+                    >
+                      <LoaderCircle /> Load More
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex justify-center pt-5 md:pt-8">
+                    <button
+                      onClick={handleReset}
+                      className="px-6 flex justify-center items-center gap-x-2 py-2 cursor-pointer bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-amber-600 transition hover:scale-105 duration-300"
+                    >
+                      <RotateCcw /> Reset All
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </>
         ) : (
           <p className="text-center text-gray-500 font-semibold text-2xl mt-6">
             No Data Found.
