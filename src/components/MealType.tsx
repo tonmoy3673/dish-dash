@@ -3,9 +3,11 @@ import type { MealType } from "../types/meal-category.types";
 import { useParams } from "react-router";
 import { getMealType } from "../services/meal-category-service";
 import { UtensilsCrossed } from "lucide-react";
+import SelectedMeal from "./SelectedMeal";
+import Loader from "../hooks/useLoader";
 
 const MealType = () => {
-  const [meals, setMeals] = useState<MealType | null>(null);
+  const [meals, setMeals] = useState<MealType[]>( []);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
 
@@ -16,7 +18,7 @@ const MealType = () => {
     setLoading(true);
     const fetchMeal = async (strCategory: string): Promise<void> => {
       try {
-        const response = await getMealType(strCategory);
+        const response  = await getMealType(strCategory);
         setMeals(response);
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -31,13 +33,40 @@ const MealType = () => {
       }
     };
     fetchMeal(strCategory);
-  }, []);
-  console.log(meals);
+  }, [strCategory]);
+  console.log('meals',meals);
 
   return (
     <div>
-        {/* ============ title ======== */}
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-700 text-center pb-4 raleway flex items-center justify-center gap-x-2 md:gap-x-4">Food Lists of <span className="flex items-center gap-x-2"><UtensilsCrossed /> {strCategory}</span> </h2>
+      {/* ============ title ======== */}
+      <h2 className="text-xl md:text-2xl font-semibold text-gray-700 text-center pb-4 raleway flex items-center justify-center gap-x-2 md:gap-x-4">
+        Food Lists of{" "}
+        <span className="flex items-center gap-x-2">
+          <UtensilsCrossed /> {strCategory}
+        </span>{" "}
+      </h2>
+
+     
+
+      {/* ================= selectedMeals =========== */}
+      <div>
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <p className="text-red-500 font-semibold text-xl text-center py-3">
+            {error}
+          </p>
+        ) : meals && meals?.length > 0 ? (
+          <div>
+            {meals.map((meal)=> <SelectedMeal key={meal.idMeal} meal={meal}/>)}
+            
+          </div>
+        ) : (
+          <p className="text-center text-gray-500 font-semibold text-2xl mt-6">
+            No Data Found.
+          </p>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-
+import { UtensilsCrossed } from "lucide-react";
 import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
@@ -6,11 +6,12 @@ const Navbar = () => {
     <div className="flex items-center justify-between">
       {/* ========= Logo ======= */}
       <div>
-        <Link to='/'>
-        <img
-          src="../../public/images/logo.png"
-          className="rounded-full w-22 bg-amber-50 cursor-pointer hover:bg-amber-200"
-        /></Link>
+        <Link to="/">
+          <h2 className="flex items-center justify-center gap-x-1 roboto text-xl md:text-3xl">
+            <UtensilsCrossed size={30} className="text-amber-600"/> Dish{" "}
+            <span className="text-amber-600 text-2xl md:text-4xl"> Dash</span>
+          </h2>
+        </Link>
       </div>
       {/* ============= nav ===== */}
       <nav className="mx-auto flex gap-x-5">
@@ -23,7 +24,7 @@ const Navbar = () => {
           }
           to="/"
         >
-          Home
+          Meals
         </NavLink>
         {/* ============ About ========= */}
         <NavLink
