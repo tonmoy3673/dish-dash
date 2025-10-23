@@ -17,7 +17,7 @@ const Categories = ({ category }: CategoryProps) => {
       />
       <h3 className="roboto text-lg md:text-xl py-1 md:py-3 text-center">
         {strCategory}
-      </h3>
+      </h3> 
       <p className="inter text-center">
         Description :{" "}
         {strCategoryDescription.length > 50 ? (

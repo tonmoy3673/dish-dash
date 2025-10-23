@@ -60,9 +60,9 @@ const MealCategory = () => {
   };
 
   // ========== handleReset ========//
-  const handleReset =()=>{
-    setCount(6)
-  }
+  const handleReset = () => {
+    setCount(6);
+  };
 
   return (
     <div className="py-5 md:py-10 px-5">
@@ -106,7 +106,7 @@ const MealCategory = () => {
                     onClick={handleLoad}
                     className="px-6 flex justify-center items-center gap-x-2 py-2 cursor-pointer bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-amber-600 transition hover:scale-105 duration-300"
                   >
-                 <LoaderCircle /> Load More
+                    <LoaderCircle /> Load More
                   </button>
                 </div>
               ) : (
@@ -115,7 +115,7 @@ const MealCategory = () => {
                     onClick={handleReset}
                     className="px-6 flex justify-center items-center gap-x-2 py-2 cursor-pointer bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-amber-600 transition hover:scale-105 duration-300"
                   >
-                   <RotateCcw /> Reset Category
+                    <RotateCcw /> Reset Category
                   </button>
                 </div>
               )}

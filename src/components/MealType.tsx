@@ -12,8 +12,7 @@ const MealType = () => {
   const [error, setError] = useState<string | null>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [displayCount, setDisplayCount] = useState<number>(6);
-  
-
+  const [debounceSearch, setDebounceSearch] = useState<string>("");
   const { strCategory } = useParams();
   // ================ loadMeal =======//
   useEffect(() => {
@@ -39,15 +38,25 @@ const MealType = () => {
   }, [strCategory]);
   console.log("meals", meals);
 
+  // ============= debounceSearch ===========//
+  useEffect(() => {
+    const handleSearch = setTimeout(() => {
+      setDebounceSearch(searchTerm.trim().toLowerCase());
+    }, 500);
+    return () => clearTimeout(handleSearch);
+  }, [searchTerm]);
+
   // ============ filterSearch ========//
   const filterSearchMeal =
     meals?.filter((meal) =>
-      meal?.strMeal?.toLowerCase().includes(searchTerm.toLowerCase().trim())
+      meal?.strMeal?.toLowerCase().includes(debounceSearch)
     ) || [];
 
   // ============ displaySearchedMeal ======//
   const displaySearchedMeal =
-    searchTerm === "" ? filterSearchMeal.slice(0, displayCount) : filterSearchMeal;
+    searchTerm === ""
+      ? filterSearchMeal.slice(0, displayCount)
+      : filterSearchMeal;
 
   // ========= handleDisplayCount =========//
 
@@ -98,7 +107,7 @@ const MealType = () => {
             </div>
 
             {/* ============== load & reset button ======== */}
-            {searchTerm.trim() === "" && (
+            {debounceSearch.trim() === "" && (
               <div className="flex justify-center gap-4 pt-2 md:pt-8">
                 {displayCount <= displaySearchedMeal.length ? (
                   <div className="flex justify-center pt-5 md:pt-8">

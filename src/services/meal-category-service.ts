@@ -2,6 +2,7 @@ import type {
   MealCategoryResponse,
   MealCategoryType,
   MealType,
+  SingleMealType,
 } from "../types/meal-category.types";
 
 // ============= getMealCategory =============//
@@ -48,3 +49,9 @@ export const getMealType = async (category: string): Promise<MealType[]> => {
     }
   }
 };
+
+
+// ============= getSingleMeal ===========//
+export const getSingleMeal =(id:number):Promise<SingleMealType[]>=>{
+
+}
