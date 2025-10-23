@@ -14,7 +14,7 @@ const Navbar = () => {
         </Link>
       </div>
       {/* ============= nav ===== */}
-      <nav className="mx-auto flex gap-x-5">
+      <nav className="mx-auto flex gap-x-2 md:gap-x-5">
         {/* ================ Home =========== */}
         <NavLink
           className={({ isActive }) =>

@@ -39,7 +39,7 @@ const MealType = () => {
   return (
     <div>
       {/* ============ title ======== */}
-      <h2 className="text-xl md:text-2xl font-semibold text-gray-700 text-center pb-4 raleway flex items-center justify-center gap-x-2 md:gap-x-4">
+      <h2 className="text-xl md:text-2xl mt-2 md:mt-5 font-semibold text-gray-700 text-center pb-4 raleway flex items-center justify-center gap-x-2 md:gap-x-4">
         Food Lists of{" "}
         <span className="flex items-center gap-x-2">
           <UtensilsCrossed /> {strCategory}
@@ -49,7 +49,7 @@ const MealType = () => {
      
 
       {/* ================= selectedMeals =========== */}
-      <div>
+      <div className="py-3 md:py-8">
         {loading ? (
           <Loader />
         ) : error ? (
@@ -57,7 +57,7 @@ const MealType = () => {
             {error}
           </p>
         ) : meals && meals?.length > 0 ? (
-          <div>
+          <div className="flex flex-wrap gap-5 md:gap-12 justify-center">
             {meals.map((meal)=> <SelectedMeal key={meal.idMeal} meal={meal}/>)}
             
           </div>

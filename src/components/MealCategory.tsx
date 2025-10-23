@@ -65,7 +65,7 @@ const MealCategory = () => {
   }
 
   return (
-    <div className="py-5 md:py-10">
+    <div className="py-5 md:py-10 px-5">
       <div className="mt-2">
         <h2 className="text-xl md:text-2xl font-semibold text-gray-700 text-center pb-4 raleway">
           Our Food Categories
