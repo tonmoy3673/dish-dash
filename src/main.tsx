@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Feedback from "./pages/Feedback";
 import "./index.css";
 import MealType from "./components/MealType";
+import SingleMeal from "./components/SingleMeal";
 
 const root = document.getElementById("root") as HTMLElement;
 
@@ -17,7 +18,7 @@ ReactDOM.createRoot(root).render(
         <Route path="about" element={<About />}></Route>
         <Route path="feedback" element={<Feedback />}></Route>
         <Route path="mealCategories/:strCategory" element={<MealType/>}></Route>
-        <Route path=""></Route>
+        <Route path=":strCategory/:idMeal" element={<SingleMeal/>}></Route>
       </Route>
     </Routes>
   </BrowserRouter>

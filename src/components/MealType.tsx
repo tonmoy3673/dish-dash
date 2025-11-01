@@ -3,16 +3,17 @@ import type { MealTypeData } from "../types/meal-category.types";
 import { useParams } from "react-router";
 import { getMealType } from "../services/meal-category-service";
 import { LoaderCircle, RotateCcw, UtensilsCrossed } from "lucide-react";
-import SelectedMeal from "./SelectedMeal";
 import Loader from "../hooks/useLoader";
+import SelectedMeal from "./SelectedMeal";
 
 const MealType = () => {
-  const [meals, setMeals] = useState<MealTypeData[]>([]);
+  const [meals, setMeals] = useState<MealTypeData[] | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [displayCount, setDisplayCount] = useState<number>(6);
   const [debounceSearch, setDebounceSearch] = useState<string>("");
+  const [displayCount, setDisplayCount] = useState<number>(6);
+
   const { strCategory } = useParams();
   // ================ loadMeal =======//
   useEffect(() => {
@@ -38,33 +39,32 @@ const MealType = () => {
   }, [strCategory]);
   console.log("meals", meals);
 
-  // ============= debounceSearch ===========//
+  // ============= debounceSearch ==========//
   useEffect(() => {
-    const handleSearch = setTimeout(() => {
-      setDebounceSearch(searchTerm.trim().toLowerCase());
+    const debounce = setTimeout(() => {
+      setDebounceSearch(searchTerm.toLowerCase().trim());
     }, 500);
-    return () => clearTimeout(handleSearch);
+    return () => clearTimeout(debounce);
   }, [searchTerm]);
 
-  // ============ filterSearch ========//
-  const filterSearchMeal =
-    meals?.filter((meal) =>
-      meal?.strMeal?.toLowerCase().includes(debounceSearch)
-    ) || [];
+  // ============== filterSearch =========//
+  if (!meals) return <Loader />;
+  const filterSearch =
+    meals &&
+    meals.filter((meal) =>
+      meal?.strMeal.toLowerCase().includes(debounceSearch)
+    );
 
-  // ============ displaySearchedMeal ======//
-  const displaySearchedMeal =
-    searchTerm === ""
-      ? filterSearchMeal.slice(0, displayCount)
-      : filterSearchMeal;
+  // ========== filterToDisplay ==========//
+  const filterToDisplay =
+    debounceSearch === "" ? filterSearch.slice(0, displayCount) : filterSearch;
 
-  // ========= handleDisplayCount =========//
-
-  const loadDisplayCount = () => {
-    setDisplayCount((pre) => pre + 3);
+  // ============== handleLoad ==========//
+  const handleLoad = () => {
+    setDisplayCount((prev) => prev + 3);
   };
 
-  // =========== handleReset =======//
+  // =============== handleReset ===========//
   const handleReset = () => {
     setDisplayCount(6);
   };
@@ -82,10 +82,10 @@ const MealType = () => {
       {/* ============= search Field =======  */}
       <div className="flex justify-center mb-5 mt-1 md:mt-4">
         <input
-          type="text"
-          placeholder="Search Category ..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          type="text"
+          placeholder="Search Category ..."
           className="border px-4 py-2 rounded-md w-72 focus:border-1 focus:border-green-400 focus:outline-none focus:ring focus:ring-green-400"
         />
       </div>
@@ -98,21 +98,24 @@ const MealType = () => {
           <p className="text-red-500 font-semibold text-xl text-center py-3">
             {error}
           </p>
-        ) : displaySearchedMeal && displaySearchedMeal?.length > 0 ? (
+        ) : filterToDisplay && filterToDisplay?.length > 0 ? (
           <>
             <div className="flex flex-wrap gap-5 md:gap-8 justify-center">
-              {displaySearchedMeal.slice(0, displayCount).map((meal) => (
-                <SelectedMeal key={meal.idMeal} meal={meal} />
-              ))}
+              {filterToDisplay &&
+                filterToDisplay
+                  .slice(0, displayCount)
+                  .map((meal) => (
+                    <SelectedMeal key={meal.idMeal} meal={meal} />
+                  ))}
             </div>
 
             {/* ============== load & reset button ======== */}
             {debounceSearch.trim() === "" && (
               <div className="flex justify-center gap-4 pt-2 md:pt-8">
-                {displayCount <= displaySearchedMeal.length ? (
+                {displayCount <= filterToDisplay.length ? (
                   <div className="flex justify-center pt-5 md:pt-8">
                     <button
-                      onClick={loadDisplayCount}
+                      onClick={handleLoad}
                       className="px-6 flex justify-center items-center gap-x-2 py-2 cursor-pointer bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-amber-600 transition hover:scale-105 duration-300"
                     >
                       <LoaderCircle /> Load More
