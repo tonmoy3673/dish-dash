@@ -53,7 +53,7 @@ const SingleMeal = () => {
   return (
     <div>
       {/* ====== singleCard Container =========== */}
-      <div className="flex flex-wrap bg-gray-100 py-15 bg-green-400">
+      <div className="flex flex-wrap bg-gray-100 py-15 ">
         {/* ========== fool Image ======= */}
 
         <img
@@ -62,13 +62,13 @@ const SingleMeal = () => {
         />
 
         {/* ============== text body container ========== */}
-        <div className="flex flex-col  bg-amber-400 w-1/2">
+        <div className="flex flex-col   w-1/2">
           <h2 className="flex gap-x-1 roboto text-xl md:text-3xl">
             <UtensilsCrossed size={30} className="text-amber-600" /> Dish{" "}
             <span className="text-amber-600 text-2xl md:text-4xl"> Dash</span>
           </h2>
 
-          <h3 className="text-xl font-semibold text-gray-700">{strMeal}</h3>
+          <h3 className="text-xl ml-1 md:ml-4 mt-1 font-semibold text-gray-700">{strMeal}</h3>
         </div>
       </div>
     </div>
