@@ -17,6 +17,7 @@ ReactDOM.createRoot(root).render(
         <Route path="about" element={<About />}></Route>
         <Route path="feedback" element={<Feedback />}></Route>
         <Route path="mealCategories/:strCategory" element={<MealType/>}></Route>
+        <Route path=""></Route>
       </Route>
     </Routes>
   </BrowserRouter>

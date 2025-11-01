@@ -1,7 +1,10 @@
 import type {
   MealCategoryResponse,
   MealCategoryType,
-  MealType,
+
+  MealTypeData,
+
+  SingleMealResponse,
   SingleMealType,
 } from "../types/meal-category.types";
 
@@ -28,7 +31,7 @@ export const getMealCategory = async (): Promise<MealCategoryType[]> => {
 };
 
 // ============= getMealType ========//
-export const getMealType = async (category: string): Promise<MealType[]> => {
+export const getMealType = async (category: string): Promise<MealTypeData[]> => {
   try {
     const response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
@@ -50,8 +53,26 @@ export const getMealType = async (category: string): Promise<MealType[]> => {
   }
 };
 
-
 // ============= getSingleMeal ===========//
-export const getSingleMeal =(id:number):Promise<SingleMealType[]>=>{
-
-}
+export const getSingleMeal = async (
+  idMeal: number
+): Promise<SingleMealType[] | null> => {
+  try {
+    const response = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to Fetch Single Meal Data!");
+    }
+    const data: SingleMealResponse = await response.json();
+    return data.meals || null;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(`Failed to Fetch Meal Data ${err.message}`);
+      throw new Error(`Failed to Fetch Data ${err.name}`);
+    } else {
+      console.error(`Unknown Error Found ${err}`);
+      throw new Error(`Unknown Error Found`);
+    }
+  }
+};

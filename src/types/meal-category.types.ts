@@ -12,7 +12,7 @@ export interface MealCategoryResponse {
 }
 
 // ================ MealType ======//
-export interface MealType {
+export interface MealTypeData {
   strMeal: string;
   strMealThumb: string;
   idMeal: string;
@@ -76,7 +76,7 @@ export interface SingleMealType {
   dateModified?: string | null;
 }
 
-export interface MealResponse {
+export interface SingleMealResponse {
   meals: SingleMealType[];
 }
 

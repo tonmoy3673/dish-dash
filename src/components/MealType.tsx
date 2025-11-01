@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { MealType } from "../types/meal-category.types";
+import type { MealTypeData } from "../types/meal-category.types";
 import { useParams } from "react-router";
 import { getMealType } from "../services/meal-category-service";
 import { LoaderCircle, RotateCcw, UtensilsCrossed } from "lucide-react";
@@ -7,7 +7,7 @@ import SelectedMeal from "./SelectedMeal";
 import Loader from "../hooks/useLoader";
 
 const MealType = () => {
-  const [meals, setMeals] = useState<MealType[]>([]);
+  const [meals, setMeals] = useState<MealTypeData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
   const [searchTerm, setSearchTerm] = useState<string>("");

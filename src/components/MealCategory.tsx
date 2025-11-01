@@ -6,7 +6,7 @@ import Categories from "./Categories";
 import { LoaderCircle, RotateCcw } from "lucide-react";
 
 const MealCategory = () => {
-  const [mealCategories, setMealCategories] = useState<MealCategoryType[]>([]);
+  const [mealCategories, setMealCategories] = useState<MealCategoryType[] | undefined>(undefined);
   const [count, setCount] = useState<number>(6);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -44,6 +44,7 @@ const MealCategory = () => {
   }, [searchTerm]);
 
   // ============= Filtered list =================//
+  if (!mealCategories) return <Loader />
   const filteredCategories = mealCategories.filter((category) =>
     category.strCategory.toLowerCase().includes(debounceSearch)
   );
